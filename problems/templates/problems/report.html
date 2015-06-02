@@ -1,3 +1,6 @@
+{% extends "default.html" %}
+{% block heading %}Report Problems{% endblock %}
+{% block content%}
 <!doctype html>
 <html>
   <body>
@@ -11,10 +14,11 @@
     <form method="post" action="/problem/report/submit">
       {% csrf_token %}
       <table>
-	{{ form.as_table }}
+	{{ form.as_p }}
 
 	<tr><td colspan="2"><input type="submit" value="Submit" /></td></tr>
       </table>
     </form>
   </body>
 </html>
+{% endblock %}

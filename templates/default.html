@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gravel</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+	<h1>{%block heading%}No heading{%endblock%}</h1>
+	<div class="nav">
+	  <a href="/">Home</a> | 
+	  <a href="/login">Login</a>
+	</div>
+	  
+      </header>
+      
+      <div id="center">
+	<div id="content">
+	  {%block content%}{%endblock%}
+	</div>
+      </div>
+
+      <footer>
+	<div class="nav">
+	  <a href="/">Home</a> | <a href="/login/">Login</a>
+	</div>
+      </footer>
+    </div>
+  </body>
+</body>

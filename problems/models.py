@@ -26,7 +26,7 @@ class Problem(models.Model):
     responses = models.ManyToManyField('Reply')
 
     def replies(self):
-        return responses.all().order_by('date')
+        return self.responses.all().order_by('date')
 
 
 class ProblemTag(models.Model):

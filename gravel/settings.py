@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 from gravel.private_settings import *
+from django.conf.global_settings import STATICFILES_DIRS
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,7 +46,7 @@ ROOT_URLCONF = 'gravel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,3 +66,7 @@ WSGI_APPLICATION = 'gravel.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)

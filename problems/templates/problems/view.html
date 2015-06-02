@@ -1,21 +1,27 @@
-<!doctype html>
-<html>
-  <body>
+{% extends "default.html" %}
+{% block heading %}{%if problem.resolved%}[RESOLVED]{%else%}[{{ problem.percent_complete }}%]{%endif%} {{ problem.title }}{% endblock %}
+{% block content %}
+<p><b>Opened by:</b> {{ problem.username }} {%if problem.userauthed%} &#x2713; {%endif%} <b>at</b> {{ problem.date_created|date:"l, F j, Y, P" }}</p>
+{%if problem.resolved%}<p><b>Closed at:</b> {{ problem.date_closed|date:"l, F j, Y, P" }}</p>{%endif%}
+{%if problem.assigned%}
+<p><b>Assigned to:</b> {{ problem.assigned_to }}</p>
+{%else%}
+<p><b>Not assigned</b></p>
+{%endif%}
 
-    <h1>{%if problem.resolved%}[RESOLVED]{%else%}[ {{ problem.percent_complete }}% ]{%endif%} {{ problem.title }}</h1>
-    <p><b>Opened by:</b> {{ problem.username }} {%if problem.userauthed%} &#x2713; {%endif%} <b>at</b> {{ problem.date_created|date:"l, F j, Y, P" }}</p>
-    {%if problem.resolved%}<p><b>Closed at:</b> {{ problem.date_closed|date:"l, F j, Y, P" }}</p>{%endif%}
-    {%if problem.assigned%}
-    <p><<b>Assigned to:</b> {{ problem.assigned_to }}</p>
-    {%else%}
-    <p><b>Not assigned</b></p>
-    {%endif%}
+<h2>References</h2>
+{{ problem.reference }}
 
-    <h2>References</h2>
-    {{ problem.reference }}
+<h2>Description</h2>
+{{ problem.description }}
 
-    <h2>Description</h2>
-    {{ problem.description }}
+{%if problem.replies%}
+<h2>Discussion</h2>
+{%for reply in problem.replies%}
+<div class="reply">
+  <div class="user">{{ reply.user.get_full_name }}</div>
+</div>
+{%endfor%}
+{%endif%}
 
-  </body>
-</html>
+{% endblock %}
