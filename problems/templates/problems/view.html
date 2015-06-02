@@ -10,10 +10,10 @@
 {%endif%}
 
 <h2>References</h2>
-{{ problem.reference }}
+{{ problem.markdown_reference|safe }}
 
 <h2>Description</h2>
-{{ problem.description }}
+{{ problem.markdown_description|safe }}
 
 {%if problem.replies%}
 <h2>Discussion</h2>

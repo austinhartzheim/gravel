@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import bleach
+import markdown
 
 class Problem(models.Model):
     title = models.CharField(max_length=80)
@@ -27,6 +29,17 @@ class Problem(models.Model):
 
     def replies(self):
         return self.responses.all().order_by('date')
+
+    def markdown_description(self):
+        cleaned_description = bleach.clean(self.description)
+        html = markdown.markdown(cleaned_description)
+        return html
+
+    def markdown_reference(self):
+        cleaned_reference = bleach.clean(self.reference)
+        html = markdown.markdown(cleaned_reference)
+        return html
+
 
 
 class ProblemTag(models.Model):
