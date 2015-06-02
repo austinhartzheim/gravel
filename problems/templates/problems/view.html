@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <body>
+
+    <h1>{%if problem.resolved%}[RESOLVED]{%else%}[ {{ problem.percent_complete }}% ]{%endif%} {{ problem.title }}</h1>
+    <p><b>Opened by:</b> {{ problem.username }} {%if problem.userauthed%} &#x2713; {%endif%} <b>at</b> {{ problem.date_created|date:"l, F j, Y, P" }}</p>
+    {%if problem.resolved%}<p><b>Closed at:</b> {{ problem.date_closed|date:"l, F j, Y, P" }}</p>{%endif%}
+    {%if problem.assigned%}
+    <p><<b>Assigned to:</b> {{ problem.assigned_to }}</p>
+    {%else%}
+    <p><b>Not assigned</b></p>
+    {%endif%}
+
+    <h2>References</h2>
+    {{ problem.reference }}
+
+    <h2>Description</h2>
+    {{ problem.description }}
+
+  </body>
+</html>

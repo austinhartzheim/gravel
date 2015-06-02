@@ -7,7 +7,7 @@ from problems import models, forms, utils
 
 def problem_report(request):
     form = utils.create_form_with_request(request)
-    return render(request, 'problem_report.html', {'form': form})
+    return render(request, 'problems/report.html', {'form': form})
 
 
 def problem_submit(request):
@@ -24,14 +24,21 @@ def problem_submit(request):
     problem = form.save(commit=False)
     if request.user.is_authenticated():
         problem.userref = request.user
+        problem.username = request.user.get_full_name()
         problem.userauthed = True
     problem.save()
 
-    return django.http.HttpResponseRedirect('/problems/view/%i/' % problem.pk)
+    return django.http.HttpResponseRedirect('/problem/view/%i/' % problem.pk)
 
 
 def problem_view(request, pk):
-    pass
+    try:
+        problem = models.Problem.objects.get(pk=pk)
+    except models.Problem.DoesNotExist:
+        # TODO: nicer error message
+        return django.http.Http404('Invalid problem ID')
+
+    return render(request, 'problems/view.html', {'problem': problem})
 
 
 @login_required
