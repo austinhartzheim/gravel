@@ -28,7 +28,7 @@ header {
 #center {
     display: inline-block;
     text-align: left;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
 }
 #content {
     max-width: 1000px;
@@ -68,3 +68,23 @@ input[type="text"], textarea {
     padding: 4px;
 }
 
+input[type="submit"], button, .button {
+    border-radius: 2px;
+    text-align: center;
+    padding: 6px;
+    min-width: 64px;
+    margin-right: 5px;
+    border: none;
+}
+
+.primary {
+    color: white;
+    background: -moz-linear-gradient(center top , #dd4134, #d14837);
+    background: linear-gradient(center top , #dd4134, #d14837);
+}
+
+.secondary {
+    color: black;
+    background: -moz-linear-gradient(center top , #ececec, #efefef);
+    background: linear-gradient(center top , #ececec, #efefef);
+}
