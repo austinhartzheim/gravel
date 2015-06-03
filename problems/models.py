@@ -56,6 +56,10 @@ class ProblemTag(models.Model):
 
 
 class Reply(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
     user = models.ForeignKey(User)
+
+    def format(self):
+        cleaned = bleach.clean(self.text)
+        return markdown.markdown(cleaned)

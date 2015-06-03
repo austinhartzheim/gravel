@@ -21,10 +21,25 @@
 {%if problem.replies%}
 <h2>Discussion</h2>
 {%for reply in problem.replies%}
-<div class="reply">
-  <div class="user">{{ reply.user.get_full_name }}</div>
-</div>
+<section class="markdown reply">
+  <header>
+    <span class="user">{{ reply.user.get_full_name }} &#x2713;</span> - <time datetime="{{ reply.date|date:"Y-m-d H:i" }}">{{ reply.date|date:"Y-m-d P" }}</time>
+  </header>
+  {{ reply.format|safe }}
+</section>
 {%endfor%}
+{%endif %}
+
+{%if form%}
+<h3>Reply</h3>
+<form method="post" action="/problem/reply/{{ problem.pk }}/submit">
+{%csrf_token%}
+{{ form.as_p }}
+<p>Posting as {{ request.user.get_full_name }}.</p>
+<input type="submit" value="Post" class="primary" />
+</form>
+{%else%}
+You must login to post a reply.r
 {%endif%}
 
 {% endblock %}

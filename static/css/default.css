@@ -52,7 +52,7 @@ footer ul {
     list-style: none;
 }
 
-h1,h2 {
+h1,h2,h3 {
     font-family: "Book Antiqua",Palatino,"Palatino Linotype","Palatino LT STD",Georgia,serif;
     text-shadow: 1px 1px 1px rgba(50, 50, 50, 0.7);
     font-weight: normal;
@@ -64,29 +64,34 @@ h1 {
 h2 {
     font-size: 24pt;
 }
+h3 {
+    font-size: 16pt;
+}
 
 .markdown {
     background: #f6f7f8;
     padding: 10px;
     border-left: 8px solid #333;
-    margin: 0 12px;
+    margin: 6px 12px;
 }
-.markdown h1, .markdown h2, .markdown h3 {
+.markdown h1, .markdown h2, .markdown h3, .markdown h4 {
     font-family: "Roboto",Corbel,Avenir,"Lucida Grande","Lucida Sans",sans-serif
     font-kerning: normal;
+    text-shadow: none;
 }
 .markdown h1 {
     font-size: 16pt;
-    text-shadow: none;
     martin: 0 0 2px;
 }
 .markdown h2 {
     font-size: 14pt;
-    text-shadow: none;
     margin: 4px 0 4px;
 }
 .markdown h3 {
     font-size: 12pt;
+}
+.markdown h4 {
+    font-size: 11pt;
 }
 .markdown p {
     margin-left: 4px;
@@ -96,6 +101,10 @@ h2 {
 .overview {
     background: #70a0e0;
     padding: 10px;
+}
+
+.reply header .user {
+    font-size: 13pt;
 }
 
 p {

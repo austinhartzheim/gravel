@@ -38,7 +38,40 @@ def problem_view(request, pk):
         # TODO: nicer error message
         return django.http.Http404('Invalid problem ID')
 
-    return render(request, 'problems/view.html', {'problem': problem})
+    if request.user.is_authenticated():
+        form = forms.ReplySubmit()
+    else:
+        form = None
+    print(form)
+
+    return render(request, 'problems/view.html',
+                  {'problem': problem, 'form': form})
+
+@login_required
+def problem_reply_submit(request, pk):
+    try:
+        problem = models.Problem.objects.get(pk=pk)
+    except models.Problem.DoesNotExist:
+        # TODO: nicer error message
+        return django.http.Http404('Invalid problem ID')
+
+    if request.method != 'POST':
+        error = 'Your request is missing POST data.'
+        return django.http.HttpResponseNotAllowed(['POST'], error)
+
+    form = forms.ReplySubmit(request.POST)
+    if not form.is_valid():
+        return render(request, 'problems/view.html',
+                      {'problem': problem, 'form': form})
+
+    reply = form.save(commit=False)
+    reply.user = request.user
+    reply.save()
+
+    problem.responses.add(reply)
+
+    return django.http.HttpResponseRedirect('/problem/view/%i/' % problem.pk)
+
 
 
 @login_required
