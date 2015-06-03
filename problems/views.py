@@ -68,7 +68,7 @@ def problem_reply_submit(request, pk):
     reply.user = request.user
     reply.save()
 
-    problem.responses.add(reply)
+    problem.add_response(reply)
 
     return django.http.HttpResponseRedirect('/problem/view/%i/' % problem.pk)
 

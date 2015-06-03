@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -19,6 +20,8 @@ class Problem(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_closed = models.DateTimeField(default=None, null=True)
     resolved = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=None, null=True)
+    last_update_user = models.ForeignKey(User, default=None, null=True, related_name='+')
 
     assigned_to = models.ManyToManyField(User, default=None, related_name='+')
     percent_complete = models.PositiveSmallIntegerField(default=0)
@@ -29,6 +32,15 @@ class Problem(models.Model):
 
     def replies(self):
         return self.responses.all().order_by('date')
+
+    def add_response(self, response):
+        '''
+        Add the response, update last_updated, and save.
+        '''
+        self.last_updated = datetime.datetime.now()
+        self.responses.add(response)
+        self.last_update_user = response.user
+        self.save()
 
     def markdown_description(self):
         cleaned_description = bleach.clean(self.description)

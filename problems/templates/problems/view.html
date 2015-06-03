@@ -3,6 +3,7 @@
 {% block content %}
 <section class="overview">
 <p><b>Opened by:</b> {{ problem.username }} {%if problem.userauthed%} &#x2713; {%endif%} <b>at</b> {{ problem.date_created|date:"P"}} <b>on</b> {{ problem.date_created|date:"l, F j, Y" }}</p>
+{%if problem.last_updated%}<p><b>Updated by:</b> {{ problem.last_update_user.get_full_name }} &#x2713; <b>at</b> {{ problem.last_updated|date:"P" }} <b>on</b> {{ problem.last_updated|date:"l, F j, Y" }}</p>{%endif%}
 {%if problem.resolved%}<p><b>Closed at:</b> {{ problem.date_closed|date:"l, F j, Y, P" }}</p>{%endif%}
 <p><b>Assigned to:</b> {%if problem.assigned%}{{ problem.assigned_to }}{%else%}not assigned.{%endif%}</p>
 
