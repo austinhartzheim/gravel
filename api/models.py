@@ -1,4 +1,6 @@
+import os
 import time
+import base64
 import datetime
 
 from django.db import models
@@ -39,3 +41,13 @@ class RequestToken(models.Model):
 class SharedSecret(models.Model):
     user = models.OneToOneField(User)
     shared_secret = models.CharField(max_length=64)
+
+    @classmethod
+    def get_or_create(cls, user):
+        try:
+            return cls.get(user=user)
+        except cls.DoesNotExist:
+            secret = base64.b64encode(os.urandom(46))
+            obj = cls(user=user, shared_secret=secret)
+            obj.save()
+            return obj
