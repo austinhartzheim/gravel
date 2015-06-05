@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class RequestToken(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     token = models.CharField(max_length=64)
 
     expires = models.DateTimeField()
@@ -34,3 +34,8 @@ class RequestToken(models.Model):
         cls.objects.bulk_create(tokens)
 
         return tokens
+
+
+class SharedSecret(models.Model):
+    user = models.OneToOneField(User)
+    shared_secret = models.CharField(max_length=64)

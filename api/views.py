@@ -5,15 +5,16 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from problems import models
 from api.models import RequestToken
+from api.libs.validate import ValidateApiRequest
 
 
-# TODO: Check HMAC validity
+@ValidateApiRequest
 def problem_highest_id(request, user):
     highest_id = models.Problem.objects.order_by('-pk')[0].pk
     return JsonResponse({'id': highest_id})
 
 
-# TODO: check HMAC validity
+@ValidateApiRequest
 def api_get_tokens(request, user):
     try:
         data = json.loads(request.body)
