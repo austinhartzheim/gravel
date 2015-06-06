@@ -45,7 +45,7 @@ class SharedSecret(models.Model):
     @classmethod
     def get_or_create(cls, user):
         try:
-            return cls.get(user=user)
+            return cls.objects.get(user=user)
         except cls.DoesNotExist:
             secret = base64.b64encode(os.urandom(46))
             obj = cls(user=user, shared_secret=secret)
