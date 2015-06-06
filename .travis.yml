@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+install:
+  - cp gravel/private_settings.dist.py gravel/private_settings.py
+  - pip install -r requirements.txt
+  - pip install coveralls
+script:
+  - coverage run manage.py test
+  - coverage report
+after_success:
+  - coveralls
