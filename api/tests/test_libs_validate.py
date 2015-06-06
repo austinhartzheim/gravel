@@ -32,7 +32,23 @@ class TestValidateApiRequest(django.test.TestCase):
         self.user.set_password('testpassword')
         self.user.save()
 
+    def test_get_request(self):
+        '''
+        Check that the validator rejects HTTP GET and PUT requests.
+        '''
+        factory = django.test.RequestFactory()
 
+        # Test GET request to ensure rejection
+        request = factory.get('/')
+        response = self.view(request)
+        self.assertEqual(response.status_code, 405,
+                         'Not returning 405 to notify of POST requirement')
+
+        # Test PUT request to ensure rejection
+        request = factory.put('/')
+        response = self.view(request)
+        self.assertEqual(response.status_code, 405,
+                         'Not returning 405 to notify of POST requirement')
 
     def test_missing_individual_headers(self):
         '''
