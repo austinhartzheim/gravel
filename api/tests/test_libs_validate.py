@@ -63,3 +63,19 @@ class TestValidateApiRequest(django.test.TestCase):
 
             self.assertNotEqual(response.status_code, 200,
                                 'Request should have caused an HTTP error')
+
+    def test_incorrect_content_type_header(self):
+        '''
+        Check that Content-Type headers other than application/json are
+        rejected by the validator.
+        '''
+        path = '/api/problem/highest_id'
+        override_headers = {'content_type': 'text/plain'}
+
+        for header in self.headers:
+            factory = utils.GravelApiRequestFactory(override=override_headers)
+
+            request = factory.create_api_request(self.user, path, data={})
+            response = self.view(request)
+
+            self.assertEqual(response.status_code, 400)

@@ -29,6 +29,10 @@ class ValidateApiRequest():
             return django.http.HttpResponseForbidden('No User ID specified')
         if 'HTTP_X_GRAVEL_HMAC_SHA256' not in request.META:
             return django.http.HttpResponseForbidden('No HMAC given')
+        if 'CONTENT_TYPE' not in request.META:
+            return django.http.HttpResponseBadRequest('Missing Content-Type')
+        if request.META['CONTENT_TYPE'] != 'application/json':
+            return django.http.HttpResponseBadRequest('Non-JSON Content-Type')
 
         # Check that the user exists and has API access permission
         try:
