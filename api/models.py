@@ -40,14 +40,14 @@ class RequestToken(models.Model):
 
 class SharedSecret(models.Model):
     user = models.OneToOneField(User)
-    shared_secret = models.CharField(max_length=64)
+    shared_secret = models.BinaryField(max_length=64)
 
     @classmethod
     def get_or_create(cls, user):
         try:
-            return cls.objects.get(user=user)
+            return cls.objects.get(user=user).shared_secret
         except cls.DoesNotExist:
             secret = base64.b64encode(os.urandom(46))
             obj = cls(user=user, shared_secret=secret)
             obj.save()
-            return obj
+            return obj.shared_secret

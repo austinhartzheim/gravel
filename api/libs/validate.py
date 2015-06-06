@@ -68,7 +68,7 @@ class ValidateApiRequest():
             return False
 
         try:
-            shared_secret = models.SharedSecret.objects.get(user=user)
+            shared_secret = models.SharedSecret.get_or_create(user)
         except models.SharedSecret.DoesNotExist:
             return False
 

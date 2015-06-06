@@ -13,6 +13,9 @@ class TestValidateApiRequest(django.test.TestCase):
     #: Headers to be individual obitted when testing header validation
     headers = ('HTTP_X_GRAVEL_USER_ID', 'HTTP_X_GRAVEL_HMAC_SHA256')
 
+    #: An incorrect HMAC value to test HMAC validation
+    bad_hmac = '0' * 64
+
     def setUp(self):
 
         # Create a protected view
@@ -79,3 +82,20 @@ class TestValidateApiRequest(django.test.TestCase):
             response = self.view(request)
 
             self.assertEqual(response.status_code, 400)
+
+    def test_incorrect_hmac_header(self):
+        '''
+        Check that the HMAC validation code is properly executing and
+        returning an HTTP 403 Forbidden response.
+        '''
+        path = '/api/problem/highest_id'
+        override_headers = {'HTTP_X_GRAVEL_HMAC_SHA256': self.bad_hmac}
+
+        for header in self.headers:
+            factory = utils.GravelApiRequestFactory(override=override_headers)
+
+            request = factory.create_api_request(self.user, path, data={})
+            response = self.view(request)
+
+            self.assertEqual(response.status_code, 403,
+                             'Bad HMAC did not result in forbidden response')

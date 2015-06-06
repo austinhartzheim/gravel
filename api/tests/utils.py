@@ -39,7 +39,7 @@ class GravelApiRequestFactory():
         :returns: a Django request object containing the given data;
           this can be passed to a view to simulate an actual request.
         '''
-        shared_secret = models.SharedSecret.get_or_create(user).shared_secret
+        shared_secret = models.SharedSecret.get_or_create(user)
         datastr = json.dumps(data)
         hmac256 = self.compute_hmac(datastr, shared_secret)
 
