@@ -72,7 +72,7 @@ class ValidateApiRequest():
         except models.SharedSecret.DoesNotExist:
             return False
 
-        digest = hmac.new(shared_secret, request.body, sha256).digest()
+        digest = hmac.new(shared_secret, request.body, sha256).hexdigest()
         return self.__safe_compare(digest, request.META['HTTP_X_GRAVEL_HMAC_SHA256'])
 
     @staticmethod

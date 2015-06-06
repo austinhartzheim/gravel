@@ -10,8 +10,11 @@ from api.libs.validate import ValidateApiRequest
 
 @ValidateApiRequest
 def problem_highest_id(request, user):
-    highest_id = models.Problem.objects.order_by('-pk')[0].pk
-    return JsonResponse({'id': highest_id})
+    try:
+        highest_id = models.Problem.objects.order_by('-pk')[0].pk
+        return JsonResponse({'id': highest_id})
+    except IndexError:
+        return JsonResponse({'id': 0})
 
 
 @ValidateApiRequest
