@@ -58,7 +58,8 @@ class TestProblemGetHighestId(TestWithUser):
 
         rdata = json.loads(response.content.decode('utf8'))
         self.assertIn('id', rdata)
-        self.assertEqual(rdata['id'], 1, 'API should report one problem')
+        self.assertEqual(rdata['id'], prob1.pk,
+                         'API should report one problem')
 
         prob2 = problems.models.Problem(title='Test', reference='test',
                                         description='test')
@@ -72,5 +73,6 @@ class TestProblemGetHighestId(TestWithUser):
 
         rdata = json.loads(response.content.decode('utf8'))
         self.assertIn('id', rdata)
-        self.assertEqual(rdata['id'], 2, 'API should report two problems')
+        self.assertEqual(rdata['id'], prob2.pk,
+                         'API should report two problems')
 
