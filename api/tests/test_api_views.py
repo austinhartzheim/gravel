@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from api import views
 from api.tests import utils
+import problems.models
 
 
 class TestWithUser(django.test.TestCase):
@@ -41,3 +42,35 @@ class TestProblemGetHighestId(TestWithUser):
         rdata = json.loads(response.content.decode('utf8'))
         self.assertIn('id', rdata)
         self.assertEqual(rdata['id'], 0, 'API should report no current IDs')
+
+    def test_with_problems(self):
+        prob1 = problems.models.Problem(title='Test', reference='test',
+                                        description='test')
+        prob1.save()
+
+        path = '/api/problem/highest_id'
+        data = {}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_highest_id(request)
+
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
+
+        rdata = json.loads(response.content.decode('utf8'))
+        self.assertIn('id', rdata)
+        self.assertEqual(rdata['id'], 1, 'API should report one problem')
+
+        prob2 = problems.models.Problem(title='Test', reference='test',
+                                        description='test')
+        prob2.save()
+
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_highest_id(request)
+
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
+
+        rdata = json.loads(response.content.decode('utf8'))
+        self.assertIn('id', rdata)
+        self.assertEqual(rdata['id'], 2, 'API should report two problems')
+
