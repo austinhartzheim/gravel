@@ -128,3 +128,27 @@ class TestApiGetTokens(TestWithUser):
 
         self.assertEqual(response.status_code, 400,
                          'View did not return a BAD REQUEST status code')
+
+    def test_count_bounds(self):
+        '''
+        Test that the view properly denies requests that are out of
+        resonable boundaries for a count.
+        '''
+        '''
+        Test that a request for a non-numeric number of tokens is
+        rejected and returns a HTTP BAD REQUEST status code.
+        '''
+        path = '/api/get_tokens'
+        data = {'count':-1}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.api_get_tokens(request)
+
+        self.assertEqual(response.status_code, 400,
+                         'View accepted a negative count')
+
+        data = {'count': 1000000}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.api_get_tokens(request)
+
+        self.assertEqual(response.status_code, 400,
+                         'View accepted an overly-large count')
