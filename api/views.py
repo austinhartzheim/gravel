@@ -55,6 +55,6 @@ def api_get_tokens(request, user):
 
     tokens = RequestToken.build_tokens(user, count)
     return JsonResponse({
-        'expires': tokens[0].isoformat(),
+        'expires': tokens[0].expires.isoformat(),
         'tokens': [token.token for token in tokens]
     })

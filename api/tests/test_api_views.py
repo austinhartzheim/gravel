@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from api import views
 from api.tests import utils
+import api.models
 import problems.models
 
 
@@ -115,6 +116,23 @@ class TestApiGetTokens(TestWithUser):
     def setUp(self):
         super().setUp()
         self.factory = utils.GravelApiRequestFactory()
+
+    def test_expected_case(self):
+        token_count = 10
+        path = '/api/get_tokens'
+        data = {'count': token_count}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.api_get_tokens(request)
+
+        self.assertEqual(response.status_code, 200,
+                         'Server returned an error on a valid request')
+        rdata = json.loads(response.content.decode('utf8'))
+        self.assertEqual(len(rdata['tokens']), token_count,
+                         'Incorrect number of tokens returned')
+
+        tokens = api.models.RequestToken.objects.filter(user=self.user)
+        self.assertEqual(len(tokens), token_count,
+                         'Incorrect number of RequestToken objects saved')
 
     def test_non_numeric_count(self):
         '''

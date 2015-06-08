@@ -1,6 +1,7 @@
 import os
 import time
 import base64
+import hashlib
 import datetime
 
 from django.db import models
@@ -8,7 +9,7 @@ from django.contrib.auth.models import User
 
 
 class RequestToken(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User)
     token = models.CharField(max_length=64)
 
     expires = models.DateTimeField()
