@@ -76,3 +76,33 @@ class TestProblemGetHighestId(TestWithUser):
         self.assertEqual(rdata['id'], prob2.pk,
                          'API should report two problems')
 
+
+class TestProblemReply(TestWithUser):
+    '''
+    Test that the problem_reply view returns correct responses and
+    properly creates Reply objects in the database.
+    '''
+    def setUp(self):
+        super().setUp()
+        self.factory = utils.GravelApiRequestFactory()
+
+    def test_no_problems(self):
+        '''
+        Test that an error is returned when the specified Problem
+        object cannot be located.
+        '''
+        problemid = 10  # No object in the database should have this PK
+        path = '/api/problem/%i/reply' % problemid
+        data = 'helloworld'
+        request = self.factory.create_api_text_request(self.user, path, data)
+        response = views.problem_reply(request, problemid)
+
+        self.assertNotEqual(response.status_code, 200,
+                            'OK status given when the problem is missing')
+
+    def test_expected_case(self):
+        self.skipTest('Not implemented')
+
+    def test_invalid_request_body(self):
+        self.skipTest('Not implemented')
+

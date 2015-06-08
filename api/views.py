@@ -17,6 +17,23 @@ def problem_highest_id(request, user):
         return JsonResponse({'id': 0})
 
 
+# TODO: validate token
+@ValidateApiRequest
+def problem_reply(request, user, problemid):
+    try:
+        problem = models.Problem.objects.get(pk=problemid)
+    except models.Problem.DoesNotExist:
+        return django.http.Http404('Could not find specified problem')
+
+    if not request.body:
+        return django.http.HttpResponseBadRequest('Invalid reply text')
+
+    reply = models.Reply(user=user, text=request.body)
+    reply.save()
+
+    return JsonResponse({'replyid': reply.pk})
+
+
 @ValidateApiRequest
 def api_get_tokens(request, user):
     try:
