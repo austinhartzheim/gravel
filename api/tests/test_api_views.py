@@ -106,3 +106,25 @@ class TestProblemReply(TestWithUser):
     def test_invalid_request_body(self):
         self.skipTest('Not implemented')
 
+
+class TestApiGetTokens(TestWithUser):
+    '''
+    Test that the api_get_tokens view returns correct responses and
+    properly creates RequestToken objects in the database.
+    '''
+    def setUp(self):
+        super().setUp()
+        self.factory = utils.GravelApiRequestFactory()
+
+    def test_non_numeric_count(self):
+        '''
+        Test that a request for a non-numeric number of tokens is
+        rejected and returns a HTTP BAD REQUEST status code.
+        '''
+        path = '/api/get_tokens'
+        data = {'count': 'non-numeric string'}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.api_get_tokens(request)
+
+        self.assertEqual(response.status_code, 400,
+                         'View did not return a BAD REQUEST status code')

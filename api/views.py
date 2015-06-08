@@ -37,7 +37,7 @@ def problem_reply(request, user, problemid):
 @ValidateApiRequest
 def api_get_tokens(request, user):
     try:
-        data = json.loads(request.body)
+        data = json.loads(request.body.decode('utf8'))
     except ValueError:
         return django.http.HttpResponseBadRequest('Invalid JSON data')
 
