@@ -98,11 +98,24 @@ class TestProblemReply(TestWithUser):
         request = self.factory.create_api_text_request(self.user, path, data)
         response = views.problem_reply(request, problemid)
 
-        self.assertIsInstance(response, django.http.Http404,
-                              'View did not return 404 for a missing problem')
+        self.assertEqual(response.status_code, 404,
+                         'View did not return a 404 for a missing problem')
 
     def test_expected_case(self):
-        self.skipTest('Not implemented')
+        problem = problems.models.Problem(title='Teset', reference='test',
+                                          description='test')
+        problem.save()
+
+        path = '/api/problem/%i/reply' % problem.pk
+        data = 'test reply'
+        request = self.factory.create_api_text_request(self.user, path, data)
+        response = views.problem_reply(request, problem.pk)
+
+        self.assertEqual(len(problem.replies()), 1,
+                         'Problem has the incorrect number of replies')
+        reply = problem.replies()[0]
+        self.assertEqual(reply.user, self.user)
+        self.assertEqual(reply.text, data)
 
     def test_invalid_request_body(self):
         self.skipTest('Not implemented')

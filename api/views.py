@@ -23,13 +23,14 @@ def problem_reply(request, user, problemid):
     try:
         problem = models.Problem.objects.get(pk=problemid)
     except models.Problem.DoesNotExist:
-        return django.http.Http404('Could not find specified problem')
+        return django.http.HttpResponseNotFound('Could not find problem')
 
     if not request.body:
         return django.http.HttpResponseBadRequest('Invalid reply text')
 
     reply = models.Reply(user=user, text=request.body)
     reply.save()
+    problem.add_response(reply)
 
     return JsonResponse({'replyid': reply.pk})
 

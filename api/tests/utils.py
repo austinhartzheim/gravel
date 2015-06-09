@@ -80,8 +80,7 @@ class GravelApiRequestFactory():
           this can be passed to a view to simulate an actual request.
         '''
         shared_secret = models.SharedSecret.get_or_create(user)
-        datastr = json.dumps(data)
-        hmac256 = self.compute_hmac(datastr, shared_secret)
+        hmac256 = self.compute_hmac(data, shared_secret)
 
         # Define headers to add to the request
         headers = {
@@ -100,7 +99,7 @@ class GravelApiRequestFactory():
             headers[header] = value
 
         # Create the POST request
-        return self.factory.post(path, datastr, **headers)
+        return self.factory.post(path, data, **headers)
 
 
     def compute_hmac(self, data, shared_secret):
