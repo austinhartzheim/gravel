@@ -31,7 +31,8 @@ class ValidateApiRequest():
             return django.http.HttpResponseForbidden('No HMAC given')
         if 'CONTENT_TYPE' not in request.META:
             return django.http.HttpResponseBadRequest('Missing Content-Type')
-        if request.META['CONTENT_TYPE'] != 'application/json':
+        if (request.META['CONTENT_TYPE'] != 'application/json' and
+            request.META['CONTENT_TYPE'] != 'text/plain'):
             return django.http.HttpResponseBadRequest('Non-JSON Content-Type')
 
         # Check that the user exists and has API access permission

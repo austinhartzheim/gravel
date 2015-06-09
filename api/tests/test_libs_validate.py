@@ -73,7 +73,7 @@ class TestValidateApiRequest(django.test.TestCase):
         rejected by the validator.
         '''
         path = '/api/problem/highest_id'
-        override_headers = {'content_type': 'text/plain'}
+        override_headers = {'content_type': 'application/ecmascript'}
 
         for header in self.headers:
             factory = utils.GravelApiRequestFactory(override=override_headers)

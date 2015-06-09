@@ -98,8 +98,8 @@ class TestProblemReply(TestWithUser):
         request = self.factory.create_api_text_request(self.user, path, data)
         response = views.problem_reply(request, problemid)
 
-        self.assertNotEqual(response.status_code, 200,
-                            'OK status given when the problem is missing')
+        self.assertIsInstance(response, django.http.Http404,
+                              'View did not return 404 for a missing problem')
 
     def test_expected_case(self):
         self.skipTest('Not implemented')
