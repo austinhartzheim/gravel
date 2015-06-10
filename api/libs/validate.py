@@ -99,3 +99,31 @@ class ValidateApiRequest():
                     result = False
                 count += 1
             return result
+
+
+class ValidateToken():
+    def __init__(self, view):
+        self.view = view
+
+    def __call__(self, request, user, *args, **kwargs):
+        '''
+        Check that `request` contains the expected token data for a
+        request from the User ID specified in the headers.
+        
+        If the request is valid, delete the token object and forward
+        the request to the view. Otherwise, return an error code.
+        
+        This should follow the ValidateApiRequest decorator because it
+        requires a user object, which that decorator fetches.
+        '''
+        if 'HTTP_X_GRAVEL_TOKEN' not in request.META:
+            return django.http.HttpResponseForbidden('Token was not provided')
+        tokenstr = request.META['HTTP_X_GRAVEL_TOKEN']
+
+        try:
+            token = models.RequestToken.objects.get(user=user, token=tokenstr)
+            token.delete()
+        except models.RequestToken.DoesNotExist:
+            return django.http.HttpResponseForbidden('Invalid token used')
+
+        return self.view(request, user, *args, **kwargs)
