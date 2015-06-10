@@ -136,10 +136,10 @@ class TestProblemGetReplies(TestWithUser):
         problem does not exist.
         '''
         problemid = 10  # No Problem should have this PK
-        path = '/api/problem/%i/get_replies' % problemid
-        data = {}
+        path = '/api/problem/get_replies'
+        data = {'id': problemid}
         request = self.factory.create_api_request(self.user, path, data)
-        response = views.problem_get_replies(request, problemid)
+        response = views.problem_get_replies(request)
 
         self.assertEqual(response.status_code, 404,
                          'View did not return a 404 for a missing problem')
@@ -152,10 +152,10 @@ class TestProblemGetReplies(TestWithUser):
         problem = problems.models.Problem(title='Test', reference='test',
                                           description='test')
         problem.save()
-        path = '/api/problem/%i/get_replies' % problem.pk
-        data = {}
+        path = '/api/problem/get_replies'
+        data = {'id': problem.pk}
         request = self.factory.create_api_request(self.user, path, data)
-        response = views.problem_get_replies(request, problem.pk)
+        response = views.problem_get_replies(request)
 
         self.assertEqual(response.status_code, 200,
                          'View returned an HTTP error code')
@@ -185,10 +185,10 @@ class TestProblemGetReplies(TestWithUser):
         problem.add_response(reply)
 
         # Create a request to the API
-        path = '/api/problem/%i/get_replies' % problem.pk
-        data = {}
+        path = '/api/problem/get_replies'
+        data = {'id': problem.pk}
         request = self.factory.create_api_request(self.user, path, data)
-        response = views.problem_get_replies(request, problem.pk)
+        response = views.problem_get_replies(request)
 
         # Check the API response
         self.assertEqual(response.status_code, 200,

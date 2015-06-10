@@ -40,9 +40,14 @@ def problem_reply(request, user):
 
 
 @ValidateApiRequest
-def problem_get_replies(request, user, problemid):
+def problem_get_replies(request, user):
     try:
-        problem = models.Problem.objects.get(pk=problemid)
+        data = json.loads(request.body.decode('utf8'))
+        problem = models.Problem.objects.get(pk=data['id'])
+    except ValueError:
+        return django.http.HttpResponseBadRequest('Invalid JSON data')
+    except IndexError:
+        return django.http.HttpResponse('Key missing from JSON data')
     except models.Problem.DoesNotExist:
         return django.http.HttpResponseNotFound('Could not find problem')
 
