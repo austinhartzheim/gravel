@@ -121,6 +121,91 @@ class TestProblemReply(TestWithUser):
         self.skipTest('Not implemented')
 
 
+class TestProblemGetReplies(TestWithUser):
+    '''
+    Test that the problem_get_replies view returns the correct reply
+    informaon.
+    '''
+    def setUp(self):
+        super().setUp()
+        self.factory = utils.GravelApiRequestFactory()
+
+    def test_problem_does_not_exist(self):
+        '''
+        Test that a HTTP 404 error is returned when the requested
+        problem does not exist.
+        '''
+        problemid = 10  # No Problem should have this PK
+        path = '/api/problem/%i/get_replies' % problemid
+        data = {}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_get_replies(request, problemid)
+
+        self.assertEqual(response.status_code, 404,
+                         'View did not return a 404 for a missing problem')
+
+    def test_problem_without_replies(self):
+        '''
+        Test that a problem without replies returns an empty list of
+        replies.
+        '''
+        problem = problems.models.Problem(title='Test', reference='test',
+                                          description='test')
+        problem.save()
+        path = '/api/problem/%i/get_replies' % problem.pk
+        data = {}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_get_replies(request, problem.pk)
+
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
+
+        rdata = json.loads(response.content.decode('utf8'))
+        self.assertEqual(rdata['problemid'], problem.pk,
+                         'Response included an unexpected `problemid` value')
+        self.assertEqual(len(rdata['replies']), 0,
+                         'The returned data contained unexpected replies')
+
+    def test_problem_with_reply(self):
+        '''
+        Test that a problem with a reply returns a list containing the
+        reply with the expected data.
+        '''
+        # Create a Problem object
+        problem = problems.models.Problem(title='Test', reference='test',
+                                          description='test')
+        problem.save()
+
+        # Create a Reply object
+        reply_text = 'hello there, world'
+        reply = problems.models.Reply(text=reply_text, user=self.user)
+        reply.save()
+
+        # Add reply to problem
+        problem.add_response(reply)
+
+        # Create a request to the API
+        path = '/api/problem/%i/get_replies' % problem.pk
+        data = {}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_get_replies(request, problem.pk)
+
+        # Check the API response
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
+
+        rdata = json.loads(response.content.decode('utf8'))
+        self.assertEqual(rdata['problemid'], problem.pk,
+                         'Response included an unexpected `problemid` value')
+        self.assertEqual(len(rdata['replies']), 1,
+                         'The returned data contained unexpected replies')
+        rreply = rdata['replies'][0]
+        self.assertEqual(rreply['text'], reply_text,
+                         'Returned reply response text does not match')
+        self.assertEqual(rreply['userid'], self.user.pk,
+                         'User ID in reply is incorrect')
+
+
 class TestApiGetTokens(TestWithUser):
     '''
     Test that the api_get_tokens view returns correct responses and

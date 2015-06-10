@@ -75,3 +75,11 @@ class Reply(models.Model):
     def format(self):
         cleaned = bleach.clean(self.text)
         return markdown.markdown(cleaned)
+
+    def serialize(self):
+        return {
+            'id': self.pk,
+            'date': self.date.isoformat(),
+            'text': self.text,
+            'userid': self.user.pk
+        }

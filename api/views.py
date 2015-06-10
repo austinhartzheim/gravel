@@ -36,6 +36,19 @@ def problem_reply(request, user, problemid):
 
 
 @ValidateApiRequest
+def problem_get_replies(request, user, problemid):
+    try:
+        problem = models.Problem.objects.get(pk=problemid)
+    except models.Problem.DoesNotExist:
+        return django.http.HttpResponseNotFound('Could not find problem')
+
+    return JsonResponse({
+        'problemid': problem.pk,
+        'replies': [reply.serialize() for reply in problem.replies()]
+    })
+
+
+@ValidateApiRequest
 def api_get_tokens(request, user):
     try:
         data = json.loads(request.body.decode('utf8'))
