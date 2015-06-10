@@ -19,20 +19,24 @@ def problem_highest_id(request, user):
 
 # TODO: validate token
 @ValidateApiRequest
-def problem_reply(request, user, problemid):
+def problem_reply(request, user):
     try:
-        problem = models.Problem.objects.get(pk=problemid)
+        data = json.loads(request.body.decode('utf8'))
+    except ValueError:
+        return django.http.HttpResponseBadRequest('Invalid JSON data')
+
+    try:
+        problem = models.Problem.objects.get(pk=data['id'])
+        reply = models.Reply(user=user, text=data['text'])
+    except IndexError:
+        return django.http.HttpResponse('Key missing from JSON data')
     except models.Problem.DoesNotExist:
         return django.http.HttpResponseNotFound('Could not find problem')
 
-    if not request.body:
-        return django.http.HttpResponseBadRequest('Invalid reply text')
-
-    reply = models.Reply(user=user, text=request.body)
     reply.save()
     problem.add_response(reply)
 
-    return JsonResponse({'replyid': reply.pk})
+    return JsonResponse({'problemid': problem.pk, 'replyid': reply.pk})
 
 
 @ValidateApiRequest

@@ -93,10 +93,10 @@ class TestProblemReply(TestWithUser):
         object cannot be located.
         '''
         problemid = 10  # No object in the database should have this PK
-        path = '/api/problem/%i/reply' % problemid
-        data = 'helloworld'
-        request = self.factory.create_api_text_request(self.user, path, data)
-        response = views.problem_reply(request, problemid)
+        path = '/api/problem/reply'
+        data = {'id': problemid, 'text': 'helloworld'}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_reply(request)
 
         self.assertEqual(response.status_code, 404,
                          'View did not return a 404 for a missing problem')
@@ -106,18 +106,18 @@ class TestProblemReply(TestWithUser):
                                           description='test')
         problem.save()
 
-        path = '/api/problem/%i/reply' % problem.pk
-        data = 'test reply'
-        request = self.factory.create_api_text_request(self.user, path, data)
-        response = views.problem_reply(request, problem.pk)
+        path = '/api/problem/reply'
+        data = {'id': problem.pk, 'text': 'test reply'}
+        request = self.factory.create_api_request(self.user, path, data)
+        response = views.problem_reply(request)
 
         self.assertEqual(len(problem.replies()), 1,
                          'Problem has the incorrect number of replies')
         reply = problem.replies()[0]
         self.assertEqual(reply.user, self.user)
-        self.assertEqual(reply.text, data)
+        self.assertEqual(reply.text, data['text'])
 
-    def test_invalid_request_body(self):
+    def test_invalid_text(self):
         self.skipTest('Not implemented')
 
 
