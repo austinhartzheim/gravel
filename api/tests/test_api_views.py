@@ -86,6 +86,7 @@ class TestProblemReply(TestWithUser):
     def setUp(self):
         super().setUp()
         self.factory = utils.GravelApiRequestFactory()
+        self.tokens = api.models.RequestToken.build_tokens(self.user)
 
     def test_no_problems(self):
         '''
@@ -95,7 +96,8 @@ class TestProblemReply(TestWithUser):
         problemid = 10  # No object in the database should have this PK
         path = '/api/problem/reply'
         data = {'id': problemid, 'text': 'helloworld'}
-        request = self.factory.create_api_request(self.user, path, data)
+        request = self.factory.create_api_request(self.user, path, data,
+                                                  self.tokens.pop().token)
         response = views.problem_reply(request)
 
         self.assertEqual(response.status_code, 404,
@@ -108,9 +110,12 @@ class TestProblemReply(TestWithUser):
 
         path = '/api/problem/reply'
         data = {'id': problem.pk, 'text': 'test reply'}
-        request = self.factory.create_api_request(self.user, path, data)
+        request = self.factory.create_api_request(self.user, path, data,
+                                                  self.tokens.pop().token)
         response = views.problem_reply(request)
 
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
         self.assertEqual(len(problem.replies()), 1,
                          'Problem has the incorrect number of replies')
         reply = problem.replies()[0]

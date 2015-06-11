@@ -52,6 +52,10 @@ class GravelApiRequestFactory():
             'content_type': 'application/json'
         }
 
+        # Include token if present
+        if token:
+            headers['HTTP_X_GRAVEL_TOKEN'] = token
+
         # Omit headers
         for header in self.omit:
             if header in headers:
