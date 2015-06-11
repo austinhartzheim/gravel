@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from problems import models
 from api.models import RequestToken
-from api.libs.validate import ValidateApiRequest
+from api.libs.validate import ValidateApiRequest, ValidateToken
 
 
 @ValidateApiRequest
@@ -17,8 +17,8 @@ def problem_highest_id(request, user):
         return JsonResponse({'id': 0})
 
 
-# TODO: validate token
 @ValidateApiRequest
+@ValidateToken
 def problem_reply(request, user):
     try:
         data = json.loads(request.body.decode('utf8'))

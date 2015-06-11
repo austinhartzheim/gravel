@@ -22,7 +22,7 @@ class GravelApiRequestFactory():
         self.override = override
         self.factory = django.test.RequestFactory()
 
-    def create_api_request(self, user, path, data):
+    def create_api_request(self, user, path, data, token=None):
         '''
         Createa a Gravel API request for testing purposes. The returned
         request object will have headers and a SHA256 HMAC as if it was
@@ -36,6 +36,8 @@ class GravelApiRequestFactory():
           used to compute the HMAC, and used as the request body.
         :param str topic: The topic for the Shopify-Topic header. This
           has a form such as "customers/create".
+        :param str token: If the value of this variable is True when
+          cast to a boolean, it will be included as the token value.
         :returns: a Django request object containing the given data;
           this can be passed to a view to simulate an actual request.
         '''

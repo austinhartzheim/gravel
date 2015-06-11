@@ -4,6 +4,10 @@ from problems import models
 
 
 class TestProblem(TestCase):
+    '''
+    Test the behavior of the Problem model.
+    '''
+
     def test_add_response(self):
         problem = models.Problem()
         problem.title = 'test'

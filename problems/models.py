@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 import bleach
 import markdown
 
+
 class Problem(models.Model):
     title = models.CharField(max_length=80)
     reference = models.TextField()
@@ -51,7 +52,6 @@ class Problem(models.Model):
         cleaned_reference = bleach.clean(self.reference)
         html = markdown.markdown(cleaned_reference)
         return html
-
 
 
 class ProblemTag(models.Model):

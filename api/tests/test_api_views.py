@@ -124,7 +124,7 @@ class TestProblemReply(TestWithUser):
 class TestProblemGetReplies(TestWithUser):
     '''
     Test that the problem_get_replies view returns the correct reply
-    informaon.
+    information.
     '''
     def setUp(self):
         super().setUp()
