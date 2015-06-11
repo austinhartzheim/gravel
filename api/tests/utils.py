@@ -62,46 +62,6 @@ class GravelApiRequestFactory():
         # Create the POST request
         return self.factory.post(path, datastr, **headers)
 
-    def create_api_text_request(self, user, path, data):
-        '''
-        Createa a Gravel API text request for testing purposes. The
-        returned request object will have headers and a SHA256 HMAC as
-        if it was a real API request.
-        
-        :param django.contrib.auth.models.User user: The user for which
-          this request should be generated.
-        :param str path: The path which the emulated request would have
-          if it actually reached the view.
-        :param str data: This str will be used as the body of the
-          request object.
-        :param str topic: The topic for the Shopify-Topic header. This
-          has a form such as "customers/create".
-        :returns: a Django request object containing the given data;
-          this can be passed to a view to simulate an actual request.
-        '''
-        shared_secret = models.SharedSecret.get_or_create(user)
-        hmac256 = self.compute_hmac(data, shared_secret)
-
-        # Define headers to add to the request
-        headers = {
-            'HTTP_X_GRAVEL_USER_ID': user.pk,
-            'HTTP_X_GRAVEL_HMAC_SHA256': hmac256,
-            'content_type': 'text/plain'
-        }
-
-        # Omit headers
-        for header in self.omit:
-            if header in headers:
-                headers.pop(header)
-
-        # Override headers
-        for header, value in self.override.items():
-            headers[header] = value
-
-        # Create the POST request
-        return self.factory.post(path, data, **headers)
-
-
     def compute_hmac(self, data, shared_secret):
         '''
         Calculate the HMAC for `data` and `shared_secret`. Theese
