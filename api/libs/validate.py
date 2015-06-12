@@ -49,8 +49,14 @@ class ValidateApiRequest():
         if not self.validate_request_hmac(request, user):
             return django.http.HttpResponseForbidden('Invalid HMAC')
 
+        # Parse the JSON data
+        try:
+            data = json.loads(request.body.decode('utf8'))
+        except ValueError:
+            return django.http.HttpResponseBadRequest('Invalid JSON data')
+
         # The checks pass; forward the request and the user to the View
-        return self.view(request, user, *args, **kwargs)
+        return self.view(request, user, data, *args, **kwargs)
 
     def validate_request_hmac(self, request, user):
         '''
@@ -104,7 +110,7 @@ class ValidateToken():
     def __init__(self, view):
         self.view = view
 
-    def __call__(self, request, user, *args, **kwargs):
+    def __call__(self, request, user, data, *args, **kwargs):
         '''
         Check that `request` contains the expected token data for a
         request from the User ID specified in the headers.
@@ -115,9 +121,10 @@ class ValidateToken():
         This should follow the ValidateApiRequest decorator because it
         requires a user object, which that decorator fetches.
         '''
-        if 'HTTP_X_GRAVEL_TOKEN' not in request.META:
-            return django.http.HttpResponseForbidden('Token was not provided')
-        tokenstr = request.META['HTTP_X_GRAVEL_TOKEN']
+        try:
+            tokenstr = data['token']
+        except IndexError:
+            return django.http.HttpResponseBadRequest('Missing token in JSON')
 
         try:
             token = models.RequestToken.objects.get(user=user, token=tokenstr)
@@ -125,4 +132,4 @@ class ValidateToken():
         except models.RequestToken.DoesNotExist:
             return django.http.HttpResponseForbidden('Invalid token used')
 
-        return self.view(request, user, *args, **kwargs)
+        return self.view(request, user, data, *args, **kwargs)
