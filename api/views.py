@@ -9,7 +9,7 @@ from api.libs.validate import ValidateApiRequest, ValidateToken
 
 
 @ValidateApiRequest
-def problem_highest_id(request, user):
+def problem_highest_id(request, user, data):
     try:
         highest_id = models.Problem.objects.order_by('-pk')[0].pk
         return JsonResponse({'id': highest_id})
@@ -19,12 +19,7 @@ def problem_highest_id(request, user):
 
 @ValidateApiRequest
 @ValidateToken
-def problem_reply(request, user):
-    try:
-        data = json.loads(request.body.decode('utf8'))
-    except ValueError:
-        return django.http.HttpResponseBadRequest('Invalid JSON data')
-
+def problem_reply(request, user, data):
     try:
         problem = models.Problem.objects.get(pk=data['id'])
         reply = models.Reply(user=user, text=data['text'])
@@ -40,12 +35,9 @@ def problem_reply(request, user):
 
 
 @ValidateApiRequest
-def problem_get_replies(request, user):
+def problem_get_replies(request, user, data):
     try:
-        data = json.loads(request.body.decode('utf8'))
         problem = models.Problem.objects.get(pk=data['id'])
-    except ValueError:
-        return django.http.HttpResponseBadRequest('Invalid JSON data')
     except IndexError:
         return django.http.HttpResponse('Key missing from JSON data')
     except models.Problem.DoesNotExist:
@@ -58,12 +50,7 @@ def problem_get_replies(request, user):
 
 
 @ValidateApiRequest
-def api_get_tokens(request, user):
-    try:
-        data = json.loads(request.body.decode('utf8'))
-    except ValueError:
-        return django.http.HttpResponseBadRequest('Invalid JSON data')
-
+def api_get_tokens(request, user, data):
     count = 1
     try:
         if 'count' in data:

@@ -95,9 +95,12 @@ class TestProblemReply(TestWithUser):
         '''
         problemid = 10  # No object in the database should have this PK
         path = '/api/problem/reply'
-        data = {'id': problemid, 'text': 'helloworld'}
-        request = self.factory.create_api_request(self.user, path, data,
-                                                  self.tokens.pop().token)
+        data = {
+            'id': problemid,
+            'text': 'helloworld',
+            'token': self.tokens.pop().token
+        }
+        request = self.factory.create_api_request(self.user, path, data)
         response = views.problem_reply(request)
 
         self.assertEqual(response.status_code, 404,
@@ -109,9 +112,12 @@ class TestProblemReply(TestWithUser):
         problem.save()
 
         path = '/api/problem/reply'
-        data = {'id': problem.pk, 'text': 'test reply'}
-        request = self.factory.create_api_request(self.user, path, data,
-                                                  self.tokens.pop().token)
+        data = {
+            'id': problem.pk,
+            'text': 'test reply',
+            'token': self.tokens.pop().token
+        }
+        request = self.factory.create_api_request(self.user, path, data)
         response = views.problem_reply(request)
 
         self.assertEqual(response.status_code, 200,
