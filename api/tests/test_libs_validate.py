@@ -99,3 +99,19 @@ class TestValidateApiRequest(django.test.TestCase):
 
             self.assertEqual(response.status_code, 403,
                              'Bad HMAC did not result in forbidden response')
+
+    def test_non_numeric_user_id(self):
+        '''
+        Check that the validation of user ID properly returns a BAD
+        REQUEST error when supplied with a non-numeric user ID.
+        '''
+        path = '/api/problem/highest_id'
+        override_headers = {'HTTP_X_GRAVEL_USER_ID': 'hello'}
+
+        factory = utils.GravelApiRequestFactory(override=override_headers)
+        request = factory.create_api_request(self.user, path, data={})
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, 400,
+                         'View did not return the correct error for a bad ID')
+
