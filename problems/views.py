@@ -42,7 +42,7 @@ def problem_view(request, pk):
         problem = models.Problem.objects.get(pk=pk)
     except models.Problem.DoesNotExist:
         # TODO: nicer error message
-        return django.http.Http404('Invalid problem ID')
+        return django.http.HttpResponseNotFound('Invalid problem ID')
 
     if request.user.is_authenticated():
         form = forms.ReplySubmit()
