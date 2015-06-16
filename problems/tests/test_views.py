@@ -7,7 +7,7 @@ class TestProblemReport(django.test.TestCase):
     def setUp(self):
         self.factory = django.test.RequestFactory()
 
-    def test_request(self):
+    def test_request_without_user(self):
         path = '/problem/report'
         request = self.factory.get(path)
         response = views.problem_report(request)
@@ -23,7 +23,7 @@ class TestProblemView(django.test.TestCase):
 
     def test_missing_problem(self):
         problemid = 10   # This problem ID should not exist
-        path = '/problems/view/%i/' % problemid
+        path = '/problem/view/%i/' % problemid
         request = self.factory.get(path)
         response = views.problem_view(request, problemid)
 

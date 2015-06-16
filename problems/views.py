@@ -48,7 +48,6 @@ def problem_view(request, pk):
         form = forms.ReplySubmit()
     else:
         form = None
-    print(form)
 
     return render(request, 'problems/view.html',
                   {'problem': problem, 'form': form})
