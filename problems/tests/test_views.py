@@ -1,6 +1,21 @@
 import django.test
 from problems import views
 
+
+class TestProblemReport(django.test.TestCase):
+    
+    def setUp(self):
+        self.factory = django.test.RequestFactory()
+
+    def test_request(self):
+        path = '/problem/report'
+        request = self.factory.get(path)
+        response = views.problem_report(request)
+
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code.')
+
+
 class TestProblemView(django.test.TestCase):
 
     def setUp(self):
