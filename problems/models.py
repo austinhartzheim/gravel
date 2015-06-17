@@ -56,7 +56,7 @@ class ProblemTag(models.Model):
     @classmethod
     def get_or_create(cls, name):
         try:
-            cls.objects.get(name=name)
+            return cls.objects.get(name=name)
         except cls.DoesNotExist:
             newtag = cls(name=name)
             newtag.save()

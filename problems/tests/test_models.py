@@ -54,3 +54,34 @@ class TestProblem(TestCase):
 
         self.assertFalse('<script>' in problem.markdown_reference())
         self.assertTrue('hello' in problem.markdown_reference())
+
+
+class TestProblemTag(TestCase):
+    '''
+    Test the behavior of the ProblemTag model. 
+    '''
+
+    def test_get_or_create_creation(self):
+        '''
+        Test that the get_or_create method correctly creates a new tag
+        when one does not exist.
+        '''
+        test_name = 'testtag'
+        tag = models.ProblemTag.get_or_create(test_name)
+        self.assertIsInstance(tag, models.ProblemTag,
+                              'Incorrect return, not a ProblemTag instance')
+        self.assertEqual(tag.name, test_name,
+                         'Incorrect name set on created tag')
+
+    def test_get_or_create_getting(self):
+        '''
+        Test that the get_or_create method is able to discover and
+        return tags that already exist.
+        '''
+        test_name = 'testtag'
+        stored_tag = models.ProblemTag(name=test_name)
+        stored_tag.save()
+
+        tag = models.ProblemTag.get_or_create(test_name)
+        self.assertEqual(tag.pk, stored_tag.pk,
+                         'Method returned a tag with a different PK')
