@@ -44,14 +44,10 @@ class Problem(models.Model):
         self.save()
 
     def markdown_description(self):
-        cleaned_description = bleach.clean(self.description)
-        html = markdown.markdown(cleaned_description)
-        return html
+        return bleach.clean(markdown.markdown(self.description))
 
     def markdown_reference(self):
-        cleaned_reference = bleach.clean(self.reference)
-        html = markdown.markdown(cleaned_reference)
-        return html
+        return bleach.clean(markdown.markdown(self.reference))
 
 
 class ProblemTag(models.Model):
