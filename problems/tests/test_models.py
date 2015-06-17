@@ -85,3 +85,23 @@ class TestProblemTag(TestCase):
         tag = models.ProblemTag.get_or_create(test_name)
         self.assertEqual(tag.pk, stored_tag.pk,
                          'Method returned a tag with a different PK')
+
+
+class TestReply(TestCase):
+    '''
+    Test the behavior of the Reply model.
+    '''
+
+    def test_format_html_sanitization(self):
+        '''
+        Test that the format method sanitizes HTML correctly.
+        '''
+        user = User(username='test', email='test@example.com')
+        user.set_password('test')
+        user.save()
+
+        reply = models.Reply(user=user)
+        reply.text = 'hello<script>'
+
+        self.assertFalse('<script>' in reply.format())
+        self.assertTrue('hello' in reply.format())

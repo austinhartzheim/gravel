@@ -69,8 +69,10 @@ class Reply(models.Model):
     user = models.ForeignKey(User)
 
     def format(self):
-        cleaned = bleach.clean(self.text)
-        return markdown.markdown(cleaned)
+        '''
+        Return HTML-formatted markdown with dangerous tags removed.
+        '''
+        return bleach.clean(markdown.markdown(self.text))
 
     def serialize(self):
         return {
