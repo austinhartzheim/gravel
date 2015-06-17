@@ -75,6 +75,8 @@ class Reply(models.Model):
         return bleach.clean(markdown.markdown(self.text))
 
     def serialize(self):
+        # TODO: Should we return the raw text which might contain
+        #   malicious HTML? Or, return the post-markdown format?
         return {
             'id': self.pk,
             'date': self.date.isoformat(),

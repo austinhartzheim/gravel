@@ -105,3 +105,20 @@ class TestReply(TestCase):
 
         self.assertFalse('<script>' in reply.format())
         self.assertTrue('hello' in reply.format())
+
+    def test_serialize(self):
+        '''
+        Test that the serialize method returns correct data.
+        '''
+        user = User(username='test', email='test@example.com')
+        user.set_password('test')
+        user.save()
+
+        reply = models.Reply(user=user)
+        reply.text = 'hello to the world'
+        reply.save()
+
+        data = reply.serialize()
+        self.assertEqual(data['id'], reply.pk)
+        self.assertEqual(data['userid'], user.pk)
+        self.assertEqual(data['date'], reply.date.isoformat())
