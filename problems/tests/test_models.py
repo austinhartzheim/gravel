@@ -31,3 +31,26 @@ class TestProblem(TestCase):
         self.assertEqual(len(problem.replies()), 1,
                          'Response not added correctly')
 
+    def test_description_html_sanitization(self):
+        '''
+        Test that HTML is correctly removed when the provided
+        description is being rendered.
+        '''
+        problem = models.Problem(title='test', reference='test')
+        problem.description = 'hello<script>'
+        problem.save()
+
+        self.assertFalse('<script>' in problem.markdown_description())
+        self.assertTrue('hello' in problem.markdown_description())
+
+    def test_reference_html_sanitization(self):
+        '''
+        Test that HTML is correctly removed when the provided
+        reference is being rendered.
+        '''
+        problem = models.Problem(title='test', description='test')
+        problem.reference = 'hello<script>'
+        problem.save()
+
+        self.assertFalse('<script>' in problem.markdown_reference())
+        self.assertTrue('hello' in problem.markdown_reference())
