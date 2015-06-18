@@ -7,4 +7,6 @@ urlpatterns = patterns('api.views',
 
     # Problem commands
     url(r'problem/highest_id$', 'problem_highest_id'),
+    url(r'problem/replies/submit$', 'problem_reply'),
+    url(r'problem/replies/get$', 'problem_get_replies'),
 )
