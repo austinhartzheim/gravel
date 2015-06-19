@@ -16,6 +16,31 @@ class TestProblemReport(django.test.TestCase):
                          'View returned an HTTP error code.')
 
 
+class TestProblemSubmit(django.test.TestCase):
+
+    def setUp(self):
+        self.factory = django.test.RequestFactory()
+
+    def test_non_POST_request(self):
+        path = '/problem/submit'
+        request = self.factory.get(path)
+        response = views.problem_submit(request)
+
+        self.assertEqual(response.status_code, 405,
+                         'View returned an incorrect HTTP error code')
+
+    def test_no_POST_data(self):
+        '''
+        This test should trigger the code for invalid forms.
+        '''
+        path = '/problem/submit'
+        request = self.factory.post(path)
+        response = views.problem_submit(request)
+
+        self.assertEqual(response.status_code, 200,
+                         'View returned an HTTP error code')
+
+
 class TestProblemView(django.test.TestCase):
 
     def setUp(self):
