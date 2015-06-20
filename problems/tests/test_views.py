@@ -3,7 +3,7 @@ from problems import views
 
 
 class TestProblemReport(django.test.TestCase):
-    
+
     def setUp(self):
         self.factory = django.test.RequestFactory()
 
@@ -22,18 +22,23 @@ class TestProblemSubmit(django.test.TestCase):
         self.factory = django.test.RequestFactory()
 
     def test_non_POST_request(self):
-        path = '/problem/submit'
+        '''
+        If this view is sent a non-POST request, it should reply with a
+        form to be filled in (as it implies that the user was sent here
+        by accident).
+        '''
+        path = '/problem/report/submit'
         request = self.factory.get(path)
         response = views.problem_submit(request)
 
-        self.assertEqual(response.status_code, 405,
-                         'View returned an incorrect HTTP error code')
+        self.assertEqual(response.status_code, 200,
+                         'View returned an error; should return form page')
 
     def test_no_POST_data(self):
         '''
         This test should trigger the code for invalid forms.
         '''
-        path = '/problem/submit'
+        path = '/problem/report/submit'
         request = self.factory.post(path)
         response = views.problem_submit(request)
 
@@ -47,7 +52,7 @@ class TestProblemView(django.test.TestCase):
         self.factory = django.test.RequestFactory()
 
     def test_missing_problem(self):
-        problemid = 10   # This problem ID should not exist
+        problemid = 10  # This problem ID should not exist
         path = '/problem/view/%i/' % problemid
         request = self.factory.get(path)
         response = views.problem_view(request, problemid)

@@ -17,7 +17,7 @@ def problem_submit(request):
     if request.method != 'POST':
         form = utils.create_form_with_request(request)
         error = 'Error: no form data submitted.'
-        return render(request, 'problem_report.html',
+        return render(request, 'problems/report.html',
                       {'form': form, 'error': error})
 
     form = forms.ProblemSubmitForm(request.POST)
