@@ -115,3 +115,18 @@ class TestValidateApiRequest(django.test.TestCase):
         self.assertEqual(response.status_code, 400,
                          'View did not return the correct error for a bad ID')
 
+    def test_invalid_user_id(self):
+        '''
+        Check that the validation of the user ID returns an HTTP 403
+        FORBIDDEN error if the supplied user ID does not exist.
+        '''
+        path = '/api/problem/highest_id'
+        userid = 10  # This user ID should not exist
+        override_headers = {'HTTP_X_GRAVEL_USER_ID': userid}
+
+        factory = utils.GravelApiRequestFactory(override=override_headers)
+        request = factory.create_api_request(self.user, path, data={})
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, 403,
+                         'View did not return a 403 error for a missing user')
