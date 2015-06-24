@@ -88,3 +88,19 @@ def problem_edit(request, pk):
     Return a page with a form that allows editing of a problem.
     '''
     pass
+
+
+def tag_view(request, tag):
+    '''
+    Display a tag and the related problems.
+    '''
+    try:
+        tagobj = models.ProblemTag.objects.get(name=tag)
+    except models.ProblemTag.DoesNotExist:
+        return django.http.HttpResponseNotFound('Tag does not exist')
+
+    #problems = models.Problem.objects.filter(tags__contains=tagobj)
+    problems = models.Problem.objects.filter(tags__name=tag)
+
+    return render(request, 'problems/tag_view.html',
+                  {'problems': problems, 'tag': tag})
