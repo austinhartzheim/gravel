@@ -51,6 +51,9 @@ class Problem(models.Model):
         return bleach.clean(markdown.markdown(self.reference),
                             tags=bleach.ALLOWED_TAGS + ['p'])
 
+    def __str__(self):
+        return '%i: %s' % (self.pk, self.title)
+
 
 class ProblemTag(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -63,6 +66,9 @@ class ProblemTag(models.Model):
             newtag = cls(name=name)
             newtag.save()
             return newtag
+
+    def __str__(self):
+        return self.name
 
 
 class Reply(models.Model):
@@ -86,3 +92,6 @@ class Reply(models.Model):
             'text': self.text,
             'userid': self.user.pk
         }
+
+    def __str__(self):
+        return 'Reply %i on %s' % (self.pk, self.date.isoformat())
