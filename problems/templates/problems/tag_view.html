@@ -1,0 +1,11 @@
+{% extends "default.html" %}
+{% block heading %}{{ tag.name }} {{ problem.title }}{% endblock %}
+{% block content %}
+
+<ul>
+{% for problem in problems %}
+	<li><a href="/problem/view/{{ problem.pk }}/">{{ problem.pk }}: {%if problem.resolved%}[RESOLVED]{%else%}[{{ problem.percent_complete }}%]{%endif%} {{problem.title }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

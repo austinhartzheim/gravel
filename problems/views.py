@@ -99,7 +99,6 @@ def tag_view(request, tag):
     except models.ProblemTag.DoesNotExist:
         return django.http.HttpResponseNotFound('Tag does not exist')
 
-    #problems = models.Problem.objects.filter(tags__contains=tagobj)
     problems = models.Problem.objects.filter(tags__name=tag)
 
     return render(request, 'problems/tag_view.html',
