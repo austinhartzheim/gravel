@@ -44,10 +44,12 @@ class Problem(models.Model):
         self.save()
 
     def markdown_description(self):
-        return bleach.clean(markdown.markdown(self.description))
+        return bleach.clean(markdown.markdown(self.description),
+                            tags=bleach.ALLOWED_TAGS + ['p'])
 
     def markdown_reference(self):
-        return bleach.clean(markdown.markdown(self.reference))
+        return bleach.clean(markdown.markdown(self.reference),
+                            tags=bleach.ALLOWED_TAGS + ['p'])
 
 
 class ProblemTag(models.Model):
@@ -72,7 +74,8 @@ class Reply(models.Model):
         '''
         Return HTML-formatted markdown with dangerous tags removed.
         '''
-        return bleach.clean(markdown.markdown(self.text))
+        return bleach.clean(markdown.markdown(self.text),
+                            tags=bleach.ALLOWED_TAGS + ['p'])
 
     def serialize(self):
         # TODO: Should we return the raw text which might contain
