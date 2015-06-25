@@ -68,3 +68,27 @@ def api_get_tokens(request, user, data):
         'expires': tokens[0].expires.isoformat(),
         'tokens': [token.token for token in tokens]
     })
+
+
+@ValidateApiRequest
+def tag_get(request, user, data):
+    '''
+    Get a specific tag by looking up the ID or name.
+    '''
+    pass
+
+
+@ValidateApiRequest
+def tag_problems(request, user, data):
+    '''
+    Get all problems that have a specific tag.
+    '''
+    pass
+
+
+@ValidateApiRequest
+def tag_all(request, user, data):
+    '''
+    Get a list of all tags and their IDs.
+    '''
+    pass
