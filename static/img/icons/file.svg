@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2994"
+   viewBox="0 0 64.000001 64"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   width="100%"
+   height="100%"
+   sodipodi:docname="file.svg">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     id="namedview7"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="3.2229614"
+     inkscape:cx="115.61855"
+     inkscape:cy="128.00001"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2994" />
+  <g
+     id="layer1"
+     transform="matrix(0.27825933,0,0,0.25,-85.665196,-138.2325)">
+    <path
+       id="rect2992-9-9"
+       style="text-indent:0;text-transform:none;block-progression:tb;color:#000000"
+       d="m 319.86,552.93 c -6.5778,0 -11.999,5.4212 -11.999,12 v 232 c 0,6.5788 5.4216,12 11.999,12 h 191.99 c 6.5778,0 11.999,-5.4212 11.999,-12 V 677.05 l -7.9996,8 v 111.88 c 0,2.2852 -1.715,4 -3.9998,4 h -191.99 c -2.2849,0 -3.9998,-1.7148 -3.9998,-4 v -232 c 0,-2.2852 1.7149,-4 3.9998,-4 h 191.99 c 2.2848,0 3.9998,1.7148 3.9998,4 v 52.031 l 7.9996,8 V 564.93 c 0,-6.5788 -5.4216,-12 -11.999,-12 H 319.86 z m 30.592,56.406 v 4 h 130.81 v -4 h -130.81 z m 156.15,9.7188 c -0.90762,0 -1.8044,0.33575 -2.4999,1.0312 l -20.999,21 c -1.3909,1.3912 -1.391,3.6089 0,5 l 27.686,27.688 c 1.3909,1.3912 3.64,1.3912 5.031,0 l 20.999,-21 c 1.3909,-1.3911 1.3909,-3.6088 0,-5 l -27.686,-27.688 c -0.69548,-0.6955 -1.6235,-1.0312 -2.5311,-1.0312 z m -31.592,31.594 c -0.90762,0 -1.8044,0.33565 -2.4999,1.0312 l -66.715,66.719 c -1.3909,1.3912 -1.3909,3.6089 0,5 l 27.686,27.688 c 1.3909,1.3912 3.6401,1.3912 5.031,0 l 66.684,-66.688 c 1.3909,-1.3911 1.3909,-3.6402 0,-5.0312 l -27.686,-27.688 c -0.69547,-0.6956 -1.5922,-1.0312 -2.4999,-1.0312 z m -124.56,5.0938 v 4 h 102.68 l 3.9998,-4 h -106.68 z m 0,46.375 v 4 h 56.31 l 3.9998,-4 h -60.309 z m 47.029,25.719 a 1.6523,1.9082 0 0 0 -1.4999,1.5625 l -7.3434,22.125 -7.3434,22.062 a 1.6523,1.9082 0 0 0 0.37498,1.75 1.6523,1.9082 0 0 0 0.15624,0.125 1.6523,1.9082 0 0 0 1.4999,0.125 l 22.061,-7.3125 22.093,-7.375 a 1.6523,1.9082 0 0 0 0.99995,-3.0312 l -14.718,-14.719 -14.718,-14.75 a 1.6523,1.9082 0 0 0 -1.3749,-0.5625 1.6523,1.9082 0 0 0 -0.18749,0 z m -47.029,20.688 v 4 h 29.28 l 1.3124,-4 h -30.592 z m 101.93,0 -3.9998,4 h 32.873 v -4 h -28.873 z"
+       inkscape:connector-curvature="0" />
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Memo Pictogram</dc:title>
+        <dc:date>2013-11-01T00:58:35</dc:date>
+        <dc:description>An icon of a memo.</dc:description>
+        <dc:source>https://openclipart.org/detail/188189/memo-pictogram-by-libberry-188189</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>libberry</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>learning</rdf:li>
+            <rdf:li>memo</rdf:li>
+            <rdf:li>note</rdf:li>
+            <rdf:li>pencil</rdf:li>
+            <rdf:li>report</rdf:li>
+            <rdf:li>study</rdf:li>
+            <rdf:li>writing</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
