@@ -11,4 +11,5 @@ urlpatterns = [
 
     # Home URLs
     url(r'^$', 'home.views.home'),
+    url(r'^account/$', include('account.urls')),
 ]

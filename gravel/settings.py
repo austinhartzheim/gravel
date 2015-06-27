@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'problems',
     'api',
     'home',
+    'account',
 )
 
 MIDDLEWARE_CLASSES = (
