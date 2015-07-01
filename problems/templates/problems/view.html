@@ -9,11 +9,6 @@
 
 </section>
 
-<h2>References</h2>
-<section class="markdown">
-{{ problem.markdown_reference|safe }}
-</section>
-
 <h2>Description</h2>
 <section class="markdown">
 {{ problem.markdown_description|safe }}
@@ -40,7 +35,7 @@
 <input type="submit" value="Post" class="primary" />
 </form>
 {%else%}
-You must login to post a reply.r
+You must login to post a reply.
 {%endif%}
 
 {% endblock %}

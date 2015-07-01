@@ -11,7 +11,6 @@ class TestProblem(TestCase):
     def test_add_response(self):
         problem = models.Problem()
         problem.title = 'test'
-        problem.reference = 'test'
         problem.description = 'test'
         problem.save()
 
@@ -36,24 +35,12 @@ class TestProblem(TestCase):
         Test that HTML is correctly removed when the provided
         description is being rendered.
         '''
-        problem = models.Problem(title='test', reference='test')
+        problem = models.Problem(title='test')
         problem.description = 'hello<script>'
         problem.save()
 
         self.assertFalse('<script>' in problem.markdown_description())
         self.assertTrue('hello' in problem.markdown_description())
-
-    def test_reference_html_sanitization(self):
-        '''
-        Test that HTML is correctly removed when the provided
-        reference is being rendered.
-        '''
-        problem = models.Problem(title='test', description='test')
-        problem.reference = 'hello<script>'
-        problem.save()
-
-        self.assertFalse('<script>' in problem.markdown_reference())
-        self.assertTrue('hello' in problem.markdown_reference())
 
 
 class TestProblemTag(TestCase):

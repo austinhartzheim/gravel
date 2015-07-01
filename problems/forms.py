@@ -5,7 +5,7 @@ from problems import models
 class ProblemSubmitForm(forms.ModelForm):
     class Meta:
         model = models.Problem
-        fields = ['title', 'reference', 'description', 'username']
+        fields = ['title', 'description', 'username']
 
 
 class ReplySubmit(forms.ModelForm):

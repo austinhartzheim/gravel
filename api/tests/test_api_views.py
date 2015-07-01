@@ -45,8 +45,7 @@ class TestProblemGetHighestId(TestWithUser):
         self.assertEqual(rdata['id'], 0, 'API should report no current IDs')
 
     def test_with_problems(self):
-        prob1 = problems.models.Problem(title='Test', reference='test',
-                                        description='test')
+        prob1 = problems.models.Problem(title='Test', description='test')
         prob1.save()
 
         path = '/api/problem/highest_id'
@@ -62,8 +61,7 @@ class TestProblemGetHighestId(TestWithUser):
         self.assertEqual(rdata['id'], prob1.pk,
                          'API should report one problem')
 
-        prob2 = problems.models.Problem(title='Test', reference='test',
-                                        description='test')
+        prob2 = problems.models.Problem(title='Test', description='test')
         prob2.save()
 
         request = self.factory.create_api_request(self.user, path, data)
@@ -107,8 +105,7 @@ class TestProblemReply(TestWithUser):
                          'View did not return a 404 for a missing problem')
 
     def test_expected_case(self):
-        problem = problems.models.Problem(title='Teset', reference='test',
-                                          description='test')
+        problem = problems.models.Problem(title='Teset', description='test')
         problem.save()
 
         path = '/api/problem/reply'
@@ -160,8 +157,7 @@ class TestProblemGetReplies(TestWithUser):
         Test that a problem without replies returns an empty list of
         replies.
         '''
-        problem = problems.models.Problem(title='Test', reference='test',
-                                          description='test')
+        problem = problems.models.Problem(title='Test', description='test')
         problem.save()
         path = '/api/problem/get_replies'
         data = {'id': problem.pk}
@@ -183,8 +179,7 @@ class TestProblemGetReplies(TestWithUser):
         reply with the expected data.
         '''
         # Create a Problem object
-        problem = problems.models.Problem(title='Test', reference='test',
-                                          description='test')
+        problem = problems.models.Problem(title='Test', description='test')
         problem.save()
 
         # Create a Reply object

@@ -8,7 +8,6 @@ import markdown
 
 class Problem(models.Model):
     title = models.CharField(max_length=80)
-    reference = models.TextField()
     description = models.TextField()
 
     #: Was the user logged in when submitting the problem
@@ -45,10 +44,6 @@ class Problem(models.Model):
 
     def markdown_description(self):
         return bleach.clean(markdown.markdown(self.description),
-                            tags=bleach.ALLOWED_TAGS + ['p'])
-
-    def markdown_reference(self):
-        return bleach.clean(markdown.markdown(self.reference),
                             tags=bleach.ALLOWED_TAGS + ['p'])
 
     def __str__(self):
