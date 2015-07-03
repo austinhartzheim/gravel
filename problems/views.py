@@ -53,6 +53,18 @@ def problem_view(request, pk):
                   {'problem': problem, 'form': form})
 
 
+def problem_list(request, subset):
+    '''
+    Return a page listing all the problems.
+    '''
+    if subset == 'all':
+        problems = models.Problem.objects.all()
+        return render(request, 'problems/list.html',
+                      {'problems': problems, 'subset': 'All'})
+
+    else:
+        raise django.http.Http404()
+
 @login_required
 def problem_reply_submit(request, pk):
     '''
