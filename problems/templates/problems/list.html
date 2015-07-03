@@ -1,0 +1,17 @@
+{% extends "default.html" %}
+{% block heading %}Problems{% endblock %}
+{% block content %}
+
+
+<h2>{{ subset }} Problems</h2>
+{% if problems %}
+<ul>
+{% for problem in problems %}
+  <li><a href="/problem/view/{{ problem.pk }}/">{{ problem.title }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No problems found.</p>
+{% endif %}
+
+{% endblock %}
